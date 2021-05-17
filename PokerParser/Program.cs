@@ -105,7 +105,7 @@ namespace PokerParser
 
         private static void RunWorstLossHandsAnalysis(string player, List<Game> games, string outputfile)
         {
-            var handsplayed2bbButLost = games.Last().Hands.Where(h => h.Rounds[0].Players.Contains("K-Lo") && h.Winner != "K-Lo" && h.Rounds.SelectMany(p => p.Plays).Where(p => p.Player == "K-Lo").Sum(p => p.Chips) > h.BigBlind * 2).ToList();
+            var handsplayed2bbButLost = games.Last().Hands.Where(h => h.Rounds[0].Players.Contains(player) && h.Winner != player && h.Rounds.SelectMany(p => p.Plays).Where(p => p.Player == player).Sum(p => p.Chips) > h.BigBlind * 2).ToList();
 
             var sb = new StringBuilder();
             foreach (var h in handsplayed2bbButLost)
@@ -119,7 +119,7 @@ namespace PokerParser
                     string plays = "";
                     foreach (var p in r.Plays)
                     {
-                        if (p.Player == "K-Lo")
+                        if (p.Player == player)
                             chipslost += p.Chips;
 
                         if (p.Chips > 0)
